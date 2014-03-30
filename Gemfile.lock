@@ -1,0 +1,9 @@
+GEM
+  specs:
+    gene_ontology (0.0.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  gene_ontology
