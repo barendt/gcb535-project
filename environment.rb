@@ -21,4 +21,13 @@ ActiveRecord::Schema.define do
       t.boolean :immune_related
     end
   end
+
+  unless ActiveRecord::Base.connection.tables.include? 'human_hits'
+    create_table :human_hits do |t|
+      t.string :go_id
+      t.string :uniprot_id
+      t.string :description
+      t.string :goa_record
+    end
+  end
 end
