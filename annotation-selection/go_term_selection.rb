@@ -3,7 +3,8 @@
 # This script searches a Gene Ontology OBO file and returns a
 # tab-separated list of ID and names for terms that include
 # one of the defined KEYWORDS
-
+#
+# The tab-separated list is outputted to STDOUT.
 require 'gene_ontology'
 
 KEYWORDS = %w{immun vir antibacteria defens}
