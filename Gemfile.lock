@@ -16,6 +16,7 @@ GEM
       tzinfo (~> 1.1)
     arel (5.0.0)
     atomic (1.1.14)
+    bio (1.4.3.0001)
     builder (3.2.2)
     gene_ontology (0.0.1)
     i18n (0.6.9)
@@ -31,4 +32,5 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord
+  bio
   gene_ontology
