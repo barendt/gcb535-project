@@ -1,4 +1,13 @@
+require 'net/http'
+
 class HumanHit < ActiveRecord::Base
+
+  def to_fasta
+    # url = URI.parse("http://www.ebi.ac.uk/Tools/dbfetch/dbfetch?db=uniprotkb;id=#{uniprot_id}&format=fasta&style=raw")
+    # req = Net::HTTP::Get.new(url.path)
+    # res = Net::HTTP.start(url.host, url.port)
+    Net::HTTP.get('www.ebi.ac.uk', "/Tools/dbfetch/dbfetch?db=uniprotkb;id=#{uniprot_id}&format=fasta&style=raw")
+  end
 
   def self.create_from_goa_line(goa_line)
     hit = HumanHit.new

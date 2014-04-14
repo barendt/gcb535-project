@@ -30,4 +30,31 @@ ActiveRecord::Schema.define do
       t.string :goa_record
     end
   end
+
+  unless ActiveRecord::Base.connection.tables.include? 'spider_transcripts'
+    create_table :spider_transcripts do |t|
+      t.string :species
+      t.string :transcript
+      t.string :cds
+      t.string :translated_sequence
+      t.boolean :include_in_analysis
+    end
+  end
+
+  unless ActiveRecord::Base.connection.tables.include? 'blast_hits'
+    create_table :blast_hits do |t|
+      t.string :evalue
+      t.integer :overlap
+      t.string :query_id
+      t.integer :query_len
+      t.string :query_seq
+      t.string :target_id
+      t.integer :target_len
+      t.string :target_seq
+      t.integer :query_start
+      t.integer :query_end
+      t.integer :target_start
+      t.integer :target_end
+    end
+  end
 end
