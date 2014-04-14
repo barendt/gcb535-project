@@ -3,8 +3,25 @@
 require_relative 'environment'
 
 require 'bio'
+require 'trollop'
 
-report = Bio::Blast::Report.new(`blastp -db cae.db -query human_hits.fasta -outfmt 6`)
+opts = Trollop::options do
+  banner <<-EOS
+Runs local BLAST and adds results to a SQLite database
+
+Usage:
+       ruby blast_wrapper.rb [options]
+where [options] are:
+EOS
+
+  opt :blastdb, 'Local BLAST database', type: :string
+  opt :querysequences, 'Query sequences in FASTA format', type: :string
+end
+
+Trollop::die :blastdb, "must be specified" unless opts[:blastdb]
+Trollop::die :querysequences, "must be specified" unless opts[:querysequences]
+
+report = Bio::Blast::Report.new(`blastp -db #{opts[:blastdb]} -query #{opts[:querysequences]} -outfmt 6`)
 
 report.each_hit do |hit|
   if hit.evalue < 1e-10
