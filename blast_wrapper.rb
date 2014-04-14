@@ -41,8 +41,3 @@ report.each_hit do |hit|
     bh.save
   end
 end
-
-# local_blast_factory = Bio::Blast.local('blastp','cae.db')
-# results = local_blast_factory.query('IKTLQNISIQNYFHSKSKTVKFVEVSLANPK*')
-
-# puts results
