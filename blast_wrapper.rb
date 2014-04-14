@@ -16,10 +16,13 @@ EOS
 
   opt :blastdb, 'Local BLAST database', type: :string
   opt :querysequences, 'Query sequences in FASTA format', type: :string
+  opt :queryspecies, 'Query species', type: :string
+  opt :targetspecies, 'Target species', type: :string
 end
 
-Trollop::die :blastdb, "must be specified" unless opts[:blastdb]
-Trollop::die :querysequences, "must be specified" unless opts[:querysequences]
+[:blastdb, :querysequences, :queryspecies, :targetspecies].each do |key|
+  Trollop::die key, "must be specified" unless opts[key]
+end
 
 report = Bio::Blast::Report.new(`blastp -db #{opts[:blastdb]} -query #{opts[:querysequences]} -outfmt 6`)
 
@@ -38,6 +41,8 @@ report.each_hit do |hit|
     bh.query_end = hit.query_end
     bh.target_start = hit.target_start
     bh.target_end = hit.target_end
+    bh.query_species = opts[:queryspecies]
+    bh.target_species = opts[:targetspecies]
     bh.save
   end
 end
