@@ -22,9 +22,9 @@ describe SpiderTranscript do
     end
 
     it 'should raise an exception if no start codon is found' do
-      lambda {
+      expect {
         subject.transcript = 'UGAAAGU' 
-      }.should raise_exception(StartCodonNotFoundError)
+      }.to raise_exception(StartCodonNotFoundError)
     end
 
     it 'should have the translated CDS' do
