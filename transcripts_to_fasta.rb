@@ -26,8 +26,6 @@ end
   Trollop::die key, "must be specified" unless opts[key]
 end
 
-#input_fasta = 'data/spider-transcriptomes/Cae_transcriptome_010814.fasta'
-
 Bio::FlatFile.open(Bio::FastaFormat, opts[:input]) do |ff|
   ff.each do |entry|
     begin
