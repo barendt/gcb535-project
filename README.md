@@ -1,6 +1,9 @@
 gcb535-project
 ==============
 
+
+## Old Process
+
 1. Download the full GO ontology file. http://www.geneontology.org/ontology/obo_format_1_2/gene_ontology_ext.obo
 2. Run `go_term_selection.rb` to generated a tab-delimited list of ID and names for candidate annotations.
 3. Manually curate the generated file and enter 'Y' in a third column for annotations to include in further analyses.
@@ -11,3 +14,14 @@ gcb535-project
 
 . Run `makeblastdb -in Cae_filtered_protein_sequences.fasta -dbtype prot -out cae.db` (or similar)
 . Run `blast_wrapper` to BLAST a FASTA file of GO hits from a model organism against a target BLAST database.
+
+## New Process
+
+Overview:
+- Make local BLAST databases for target species (*Caerostris darwini* and *Nephila clavipes*)
+- Select ontology terms
+- Search annotated species data for gene products annotated with selected terms
+- BLAST the selected gene products against the local BLAST databases (`blast_wrapper`)
+- Generate some deliverable output
+  - visualizations?
+  - mapping of annotated organism gene name to spider transcript identifier
