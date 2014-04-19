@@ -15,14 +15,30 @@ where [options] are:
 EOS
 
   opt :blastdb, 'Local BLAST database', type: :string
-  opt :querysequences, 'Query sequences in FASTA format', type: :string
-  opt :queryspecies, 'Query species', type: :string
-  opt :targetspecies, 'Target species', type: :string
+  opt :taxon, 'Taxon to use as query species ', type: :integer
 end
 
-[:blastdb, :querysequences, :queryspecies, :targetspecies].each do |key|
+[:blastdb, :taxon].each do |key|
   Trollop::die key, "must be specified" unless opts[key]
 end
+
+fasta_file_path = "data/fasta/#{opts[:taxon]}.fasta"
+unless File.exists?(fasta_file_path)
+  uniprot_ids = Array.new
+  GoaLine.where(taxon: opts[:taxon]).each do |gl|
+    uniprot_ids << gl.uniprot_id
+  end
+
+  count = 0
+  File.open(fasta_file_path, 'w') do |fh|
+    while uniprot_ids.length > 0
+      batch = uniprot_ids.pop(25)
+      fh.write(GoaLine::fasta_for_uniprot_ids(batch))
+    end
+  end
+end
+
+exit
 
 report = Bio::Blast::Report.new(`blastp -db #{opts[:blastdb]} -query #{opts[:querysequences]} -outfmt 6`)
 
@@ -41,8 +57,8 @@ report.each_hit do |hit|
     bh.query_end = hit.query_end
     bh.target_start = hit.target_start
     bh.target_end = hit.target_end
-    bh.query_species = opts[:queryspecies]
-    bh.target_species = opts[:targetspecies]
+    bh.query_taxon = opts[:taxon]
+    bh.target_species = opts[:blastdb]
     bh.save
   end
 end
