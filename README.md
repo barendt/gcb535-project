@@ -25,3 +25,18 @@ Overview:
 - Generate some deliverable output
   - visualizations?
   - mapping of annotated organism gene name to spider transcript identifier
+
+
+## Detailed Process
+
+### BLAST database creation
+
+
+
+### GO Term Selection
+
+1. Download the full GO file: http://www.geneontology.org/ontology/obo_format_1_2/gene_ontology_ext.obo
+   - Place the file inside the `data` subdirectory
+2. Run `go_term_select.rb > go_terms.txt'
+3. View `go_terms.txt` in Numbers and enter 'Y' in a third column for annotations that should be used in further analyses
+4. Run `curated_list_to_sqlite.rb` to add these terms to `data/gcb535.sqlite`
