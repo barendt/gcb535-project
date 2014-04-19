@@ -1,7 +1,8 @@
 require 'active_record'
 
-Dir[File.dirname(__FILE__) + '/lib/*.rb'].each {|file| require file }
-Dir[File.dirname(__FILE__) + '/lib/models/*.rb'].each {|file| require file }
+Dir[File.join(File.dirname(__FILE__), 'lib', '**', '*.rb')].each do |file|
+ require file
+end
 
 options = {
   adapter: 'sqlite3',
