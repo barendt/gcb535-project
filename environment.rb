@@ -1,10 +1,7 @@
 require 'active_record'
 
-Dir.glob('./lib/*').each do |folder|
-  Dir.glob(folder + '/*.rb').each do |file|
-    require file
-  end
-end
+Dir[File.dirname(__FILE__) + '/lib/*.rb'].each {|file| require file }
+Dir[File.dirname(__FILE__) + '/lib/models/*.rb'].each {|file| require file }
 
 options = {
   adapter: 'sqlite3',
@@ -22,22 +19,16 @@ ActiveRecord::Schema.define do
     end
   end
 
-  unless ActiveRecord::Base.connection.tables.include? 'human_hits'
-    create_table :human_hits do |t|
+  unless ActiveRecord::Base.connection.tables.include? 'annotated_genes'
+    create_table :annotated_genes do |t|
+      t.string :species
       t.string :go_id
-      t.string :uniprot_id
+      t.string :db_id
+      t.string :db_id_type
       t.string :description
       t.string :goa_record
-    end
-  end
 
-  unless ActiveRecord::Base.connection.tables.include? 'spider_transcripts'
-    create_table :spider_transcripts do |t|
-      t.string :species
-      t.string :transcript
-      t.string :cds
-      t.string :translated_sequence
-      t.boolean :include_in_analysis
+      t.timestamps
     end
   end
 

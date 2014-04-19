@@ -1,8 +1,5 @@
 require 'spec_helper'
 
-require_relative '../../environment'
-require_relative '../../lib/models/blast_hit'
-
 describe BlastHit do
 
   it 'can extract a UniProt ID from its query ID' do
