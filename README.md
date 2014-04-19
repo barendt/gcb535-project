@@ -46,4 +46,6 @@ Overview:
 ### Selecting proteins from annotated genomes
 
 1. Download the annotated genome's GOA-formatted file (http://www.geneontology.org/GO.downloads.annotations.shtml)
-2.
+2. Run `search_genome_for_term.rb` against the unzipped GOA-formatted file:
+
+    ruby search_genome_for_term.rb  -i data/gene-associations/homo_sapiens/gene_association.goa_human
