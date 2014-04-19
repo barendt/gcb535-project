@@ -4,11 +4,6 @@ gcb535-project
 
 ## Old Process
 
-5. Download the Homo sapiens genome annotations from http://www.ebi.ac.uk/GOA/human_release.
-6. Run `search_genome_for_term.rb` to search the human genome GOA file for selected annotations.
-...
-
-. Run `makeblastdb -in Cae_filtered_protein_sequences.fasta -dbtype prot -out cae.db` (or similar)
 . Run `blast_wrapper` to BLAST a FASTA file of GO hits from a model organism against a target BLAST database.
 
 ## New Process
@@ -49,3 +44,9 @@ Overview:
 2. Run `search_genome_for_term.rb` against the unzipped GOA-formatted file:
 
     ruby search_genome_for_term.rb  -i data/gene-associations/homo_sapiens/gene_association.goa_human
+
+### Running BLAST
+
+Run BLAST by using the wrapper and passing in the local db to use and the taxon of the organism to use for queries:
+
+    ruby blast_wrapper.rb -b blastdb/cae.db -t 9606

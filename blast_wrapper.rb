@@ -38,9 +38,7 @@ unless File.exists?(fasta_file_path)
   end
 end
 
-exit
-
-report = Bio::Blast::Report.new(`blastp -db #{opts[:blastdb]} -query #{opts[:querysequences]} -outfmt 6`)
+report = Bio::Blast::Report.new(`blastp -db #{opts[:blastdb]} -query #{fasta_file_path} -outfmt 6`)
 
 report.each_hit do |hit|
   if hit.evalue < 1e-10
@@ -58,7 +56,7 @@ report.each_hit do |hit|
     bh.target_start = hit.target_start
     bh.target_end = hit.target_end
     bh.query_taxon = opts[:taxon]
-    bh.target_species = opts[:blastdb]
+    bh.blastdb = opts[:blastdb]
     bh.save
   end
 end

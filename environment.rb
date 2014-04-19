@@ -46,8 +46,8 @@ ActiveRecord::Schema.define do
       t.integer :query_end
       t.integer :target_start
       t.integer :target_end
-      t.string :query_species
-      t.string :target_species
+      t.string :query_taxon
+      t.string :blastdb
 
       t.timestamps
     end
