@@ -20,6 +20,18 @@ ActiveRecord::Schema.define do
     end
   end
 
+  unless ActiveRecord::Base.connection.tables.include? 'goa_lines'
+    create_table :goa_lines do |t|
+      t.string :line
+      t.string :db
+      t.string :db_object_id
+      t.string :db_object_symbol
+      t.string :db_object_name
+      t.string :go_id
+      t.string :taxon
+    end
+  end
+
   unless ActiveRecord::Base.connection.tables.include? 'annotated_genes'
     create_table :annotated_genes do |t|
       t.string :species
