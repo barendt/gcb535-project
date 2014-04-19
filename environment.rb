@@ -32,19 +32,6 @@ ActiveRecord::Schema.define do
     end
   end
 
-  unless ActiveRecord::Base.connection.tables.include? 'annotated_genes'
-    create_table :annotated_genes do |t|
-      t.string :species
-      t.string :go_id
-      t.string :db_id
-      t.string :db_id_type
-      t.string :description
-      t.string :goa_record
-
-      t.timestamps
-    end
-  end
-
   unless ActiveRecord::Base.connection.tables.include? 'blast_hits'
     create_table :blast_hits do |t|
       t.string :evalue
