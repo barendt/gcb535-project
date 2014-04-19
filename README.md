@@ -31,12 +31,23 @@ Overview:
 
 ### BLAST database creation
 
+1. Run `transcripts_to_fasta.rb` with a transcriptome FASTA file as input:
 
+    ruby transcripts_to_fasta.rb -i data/spider-transcriptomes/Cae_transcriptome_010814.fasta > Cae_filtered_protein_sequences.fasta
+
+2. Run `makeblastdb` using the generated FASTA file:
+
+    makeblastdb -in Cae_filtered_protein_sequences.fasta -dbtype prot -out cae.db
 
 ### GO Term Selection
 
 1. Download the full GO file: http://www.geneontology.org/ontology/obo_format_1_2/gene_ontology_ext.obo
    - Place the file inside the `data` subdirectory
-2. Run `go_term_select.rb > go_terms.txt'
+2. Run `go_term_selection.rb > go_terms.txt'
 3. View `go_terms.txt` in Numbers and enter 'Y' in a third column for annotations that should be used in further analyses
 4. Run `curated_list_to_sqlite.rb` to add these terms to `data/gcb535.sqlite`
+
+### Selecting proteins from annotated genomes
+
+1. Download the annotated genome's GOA-formatted file (http://www.geneontology.org/GO.downloads.annotations.shtml)
+2.
