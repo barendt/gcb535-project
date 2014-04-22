@@ -26,7 +26,10 @@ fasta_file_path = "data/fasta/#{opts[:taxon]}.fasta"
 unless File.exists?(fasta_file_path)
   uniprot_ids = Array.new
   GoaLine.where(taxon: opts[:taxon]).each do |gl|
-    uniprot_ids << gl.uniprot_id
+    begin
+      uniprot_ids << gl.uniprot_id
+    rescue ProductIdNotFoundException => e
+    end
   end
 
   count = 0
