@@ -34,7 +34,7 @@ File.foreach(opts[:mappingfile]) do |line|
     gm = GeneproductMapping.new
     gm.taxon = opts[:taxon]
     gm.product_id = product_id
-    gm.uniprot_id = uniprot_id.split(':').last
+    gm.uniprot_id = uniprot_id.split(':').last.strip
     gm.save
   end
 end

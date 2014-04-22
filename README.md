@@ -20,6 +20,13 @@
 3. View `go_terms.txt` in Numbers and enter 'Y' in a third column for annotations that should be used in further analyses
 4. Run `curated_list_to_sqlite.rb` to add these terms to `data/gcb535.sqlite`
 
+### Mapping gene products to UniProt entries
+
+1. Download gp2protein mapping files from http://www.geneontology.org/gp2protein.
+2. Load the gp2protein data into the SQLite database, specifying the path to the file and the taxon of the species to which the mapping applies:
+
+    ruby load_geneproduct_mappings.rb -m path/to/gp2protein/file -t 7227
+
 ### Selecting proteins from annotated genomes
 
 1. Download the annotated genome's GOA-formatted file (http://www.geneontology.org/GO.downloads.annotations.shtml)
@@ -27,15 +34,12 @@
 
     ruby search_genome_for_term.rb  -i data/gene-associations/homo_sapiens/gene_association.goa_human
 
+### Generating a FASTA file from selected proteins
+
+    ruby goalines_to_fasta.rb -t 7227 > drosophila.fasta
+
 ### Running BLAST
 
 Run BLAST by using the wrapper and passing in the local db to use and the taxon of the organism to use for queries:
 
     ruby blast_wrapper.rb -b blastdb/cae.db -t 9606
-
-### Mapping gene products to UniProt entries
-
-1. Download gp2protein mapping files from http://www.geneontology.org/gp2protein.
-2. Load the gp2protein data into the SQLite database, specifying the path to the file and the taxon of the species to which the mapping applies:
-
-    ruby load_geneproduct_mappings.rb -m path/to/gp2protein/file -t 7227

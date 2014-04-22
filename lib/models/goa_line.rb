@@ -1,5 +1,7 @@
-class GoaLine < ActiveRecord::Base
+class ProductIdNotFoundException < Exception
+end
 
+class GoaLine < ActiveRecord::Base
   after_initialize :init
 
   def taxon=(value)
@@ -7,16 +9,23 @@ class GoaLine < ActiveRecord::Base
   end
 
   def to_fasta
-    fasta_for_uniprot_id db_object_id
+    fasta_for_uniprot_id self.uniprot_id
   end
 
   def uniprot_id
-    if self.db.eql?('UniProtKB')
-      return self.db_object_id
-    end
+    return self.db_object_id if self.db.eql?('UniProtKB')
+
+    gm = GeneproductMapping
+      .where(taxon: self.taxon, product_id: self.db_object_id)
+      .first
+
+    return gm.uniprot_id unless gm.nil?
+
+    raise ProductIdNotFoundException.new "Unable to find a uniprot_id for #{self.db_object_id}"
   end
 
   def self.fasta_for_uniprot_ids(uniprot_ids)
+    puts uniprot_ids.join(",")
     Net::HTTP.get('www.ebi.ac.uk', "/Tools/dbfetch/dbfetch?db=uniprotkb;id=#{uniprot_ids.join(",")}&format=fasta&style=raw")
   end
 
