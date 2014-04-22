@@ -1,5 +1,13 @@
 # gcb535-project
 
+## Prerequisites
+
+- Ruby
+- SQLite
+- Rubygems
+- Local BLAST ()
+- imagemagick
+
 ## Detailed Process
 
 ### BLAST database creation
