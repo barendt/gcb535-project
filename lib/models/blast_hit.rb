@@ -1,7 +1,7 @@
 class BlastHit < ActiveRecord::Base
 
   def to_csv
-    "#{target_species},#{target_id},#{query_species},#{query_id}"
+    "#{blastdb},#{target_id},#{query_taxon},#{query_id}"
   end
 
   def uniprot_id

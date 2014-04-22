@@ -13,17 +13,17 @@ Usage:
 where [options] are:
 EOS
 
-  opt :queryspecies, "Query species (e.g., 'Homo sapiens')", type: :string
-  opt :targetspecies, "Target species ('Nep' or 'Cae')", type: :string
+  opt :querytaxon, "Query species taxon (e.g., '7227')", type: :integer
+  opt :blastdb, "The BLAST database used ('blastdb/cae.db')", type: :string
 end
 
-[:queryspecies, :targetspecies].each do |key|
+[:querytaxon, :blastdb].each do |key|
   Trollop::die key, "must be specified" unless opts[key]
 end
 
 BlastHit
-  .where(query_species: opts[:queryspecies], target_species: opts[:targetspecies])
-  .select(:query_species, :target_species, :query_id, :target_id).distinct.each do |hit|
+  .where(query_taxon: opts[:querytaxon], blastdb: opts[:blastdb])
+  .select(:query_taxon, :blastdb, :query_id, :target_id).distinct.each do |hit|
 
   puts hit.to_csv
 end
