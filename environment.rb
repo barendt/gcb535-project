@@ -52,4 +52,14 @@ ActiveRecord::Schema.define do
       t.timestamps
     end
   end
+
+  unless ActiveRecord::Base.connection.tables.include? 'geneproduct_mappings'
+    create_table :geneproduct_mappings do |t|
+      t.integer :taxon
+      t.string :product_id
+      t.string :uniprot_id
+
+      t.timestamps
+    end
+  end
 end

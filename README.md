@@ -1,22 +1,4 @@
-gcb535-project
-==============
-
-
-## Old Process
-
-. Run `blast_wrapper` to BLAST a FASTA file of GO hits from a model organism against a target BLAST database.
-
-## New Process
-
-Overview:
-- Make local BLAST databases for target species (*Caerostris darwini* and *Nephila clavipes*)
-- Select ontology terms
-- Search annotated species data for gene products annotated with selected terms
-- BLAST the selected gene products against the local BLAST databases (`blast_wrapper`)
-- Generate some deliverable output
-  - visualizations?
-  - mapping of annotated organism gene name to spider transcript identifier
-
+# gcb535-project
 
 ## Detailed Process
 
@@ -50,3 +32,10 @@ Overview:
 Run BLAST by using the wrapper and passing in the local db to use and the taxon of the organism to use for queries:
 
     ruby blast_wrapper.rb -b blastdb/cae.db -t 9606
+
+### Mapping gene products to UniProt entries
+
+1. Download gp2protein mapping files from http://www.geneontology.org/gp2protein.
+2. Load the gp2protein data into the SQLite database, specifying the path to the file and the taxon of the species to which the mapping applies:
+
+    ruby load_geneproduct_mappings.rb -m path/to/gp2protein/file -t 7227
