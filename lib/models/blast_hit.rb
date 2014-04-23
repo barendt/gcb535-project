@@ -4,8 +4,12 @@ class BlastHit < ActiveRecord::Base
     "#{blastdb},#{target_id},#{query_taxon},#{query_id}"
   end
 
-  def uniprot_id
+  def product_id
     query_id.split('|')[1]
+  end
+
+  def uniprot_id
+    product_id
   end
 
 end

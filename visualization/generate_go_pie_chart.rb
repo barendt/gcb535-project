@@ -2,15 +2,24 @@
 
 require_relative '../environment'
 
+require 'gchart'
+
 go_term_counts = Hash.new(0)
 
-BlastHit.where(target_species: 'Cae').each do |hit|
-  HumanHit.where(uniprot_id: hit.uniprot_id).each do |human|
-    go_term_counts[human.go_id] += 1
-    #puts "#{hit.target_id},#{hit.uniprot_id},#{human.go_id}"
+BlastHit.where(query_taxon: 7227, blastdb: 'blastdb/cae.db').each do |hit|
+  puts hit.to_yaml
+  exit
+  GoaLine.where(taxon: 7227, line: "'%#{hit.product_id}%'").each do |gl|
+    puts gl.go_id
   end
 end
 
-go_term_counts.each do |term, count|
-  puts "#{term},#{count}"
-end
+puts go_term_counts
+
+chart = Gchart.new(
+                   type: 'pie',
+                   data: [20, 35, 45],
+                   filename: '/Users/barendt/chart.png'
+                   )
+
+chart.file
