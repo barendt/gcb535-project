@@ -19,7 +19,7 @@ where [options] are:
 EOS
   
   opt :input, 'Input file (FASTA)', type: :string
-  opt :cutoff, 'Cut-off length; sequences < cutoff will not be included', default: 21
+  opt :cutoff, 'Cut-off length; AA sequences < cutoff will not be included', default: 100
 end
 
 [:input, :cutoff].each do |key|
@@ -28,9 +28,12 @@ end
 
 Bio::FlatFile.open(Bio::FastaFormat, opts[:input]) do |ff|
   ff.each do |entry|
+    transcript = entry.data.gsub("\n", '')
+    next unless transcript.length > opts[:cutoff]*3
+
     begin
       st = SpiderTranscript.new
-      st.transcript = entry.data
+      st.transcript = transcript
     rescue StartCodonNotFoundError => e
       next
     end
