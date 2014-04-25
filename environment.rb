@@ -34,6 +34,7 @@ ActiveRecord::Schema.define do
 
   unless ActiveRecord::Base.connection.tables.include? 'blast_hits'
     create_table :blast_hits do |t|
+      t.string :matrix
       t.string :evalue
       t.integer :overlap
       t.string :query_id

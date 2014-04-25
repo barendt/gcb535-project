@@ -15,6 +15,7 @@ where [options] are:
 EOS
 
   opt :blastdb, 'Local BLAST database', type: :string
+  opt :matrix, 'Matrix to use (default: BLOSUM62)', type: :string, default: 'BLOSUM62'
   opt :taxon, 'Taxon to use as query species ', type: :integer
 end
 
@@ -41,25 +42,34 @@ unless File.exists?(fasta_file_path)
   end
 end
 
-report = Bio::Blast::Report.new(`blastp -db #{opts[:blastdb]} -query #{fasta_file_path} -outfmt 6`)
+BlastHit.where(query_taxon: opts[:taxon], blastdb: opts[:blastdb], matrix: opts[:matrix]).delete_all
 
-report.each_hit do |hit|
-  if hit.evalue < 1e-10
-    bh = BlastHit.new
-    bh.evalue = hit.evalue
-    bh.overlap = hit.overlap
-    bh.query_id = hit.query_id
-    bh.query_len = hit.query_len
-    bh.query_seq = hit.query_seq
-    bh.target_id = hit.target_id
-    bh.target_len = hit.target_len
-    bh.target_seq = hit.target_seq
-    bh.query_start = hit.query_start
-    bh.query_end = hit.query_end
-    bh.target_start = hit.target_start
-    bh.target_end = hit.target_end
-    bh.query_taxon = opts[:taxon]
-    bh.blastdb = opts[:blastdb]
-    bh.save
+blast_results_file = "data/query-#{opts[:taxon]}_#{opts[:blastdb].split('/').last().gsub('.db', '')}.out"
+`blastp -db #{opts[:blastdb]} -query #{fasta_file_path} -outfmt 6 > #{blast_results_file}`
+
+File.open(blast_results_file, 'rb') do |fh|
+  report = Bio::Blast::Report.new(fh.read)
+
+  report.each_hit do |hit|
+    if hit.evalue < 1e-10
+      bh = BlastHit.new
+      bh.matrix = opts[:matrix]
+      bh.evalue = hit.evalue
+      bh.overlap = hit.overlap
+      bh.query_id = hit.query_id
+      bh.query_len = hit.query_len
+      bh.query_seq = hit.query_seq
+      bh.target_id = hit.target_id
+      bh.target_len = hit.target_len
+      bh.target_seq = hit.target_seq
+      bh.query_start = hit.query_start
+      bh.query_end = hit.query_end
+      bh.target_start = hit.target_start
+      bh.target_end = hit.target_end
+      bh.query_taxon = opts[:taxon]
+      bh.blastdb = opts[:blastdb]
+      bh.save
+    end
   end
+
 end
