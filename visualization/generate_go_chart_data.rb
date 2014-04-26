@@ -50,14 +50,16 @@ end
 term_results_path = File.join($app_root, 'results', 'go_terms', "#{opts[:querytaxon]}_#{target_taxon}")
 unless File.exists? term_results_path
   FileUtils::mkdir_p term_results_path
-  individual_hits.each do |go_id, objects|
-    term_file = File.join(term_results_path, "#{go_id.split(':').last}.csv")
-    term = GoTerm.where(go_id: go_id).first.go_term
-    File.open(term_file, 'w') do |f|
-      f.write("\"#{go_id}\",\"term\"\n")
-      objects.each do |object|
-        f.write("\"#{object}\"\n")
-      end
+end
+
+individual_hits.each do |go_id, objects|
+  objects.uniq!
+  term_file = File.join(term_results_path, "#{go_id.split(':').last}.csv")
+  term = GoTerm.where(go_id: go_id).first.go_term
+  File.open(term_file, 'w') do |f|
+    f.write("\"#{go_id}\",\"term\"\n")
+    objects.each do |object|
+      f.write("\"#{object}\"\n")
     end
   end
 end
