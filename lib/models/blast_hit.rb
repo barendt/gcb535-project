@@ -7,7 +7,7 @@ class BlastHit < ActiveRecord::Base
   def product_id
     uniprot_id = query_id.split('|')[1]
 
-    return uniprot_id if query_taxon == 9606
+    return uniprot_id if query_taxon == '9606'
 
     return GeneproductMapping.where(uniprot_id: uniprot_id).first.product_id
   end

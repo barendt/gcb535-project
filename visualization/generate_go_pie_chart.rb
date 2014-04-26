@@ -7,7 +7,7 @@ require 'trollop'
 
 opts = Trollop::options do
   banner <<-EOS
-Generates a PNG pie chart of GO terms
+Generates a CSV file GO terms and counts for chart generation
 
 Usage:
        ruby generate_go_pie_chart.rb [options]
@@ -30,23 +30,11 @@ BlastHit.where(query_taxon: opts[:querytaxon], blastdb: opts[:blastdb]).each do 
   end
 end
 
-# go_term_counts.sort_by &:last
-# puts go_term_counts
-
 target_taxon = opts[:blastdb].split('/')[1].gsub('.db', '')
 csv_file = File.join($app_root, 'results', "gochartdata-#{opts[:querytaxon]}_#{target_taxon}.csv")
 File.open(csv_file, 'w') do |f|
   go_term_counts.each do |k, v|
     gt = GoTerm.where(go_id: k).first
-    f.write "#{gt.go_term},#{v}\n"
+    f.write "\"#{gt.go_term}\",\"#{v}\"\n"
   end
 end
-
-chart = Gchart.new(
-                   type: 'pie',
-                   data: go_term_counts.values,
-                   labels: go_term_counts.keys,
-                   filename: File.join($app_root, 'results', "gochart-#{opts[:querytaxon]}_#{opts[:blastdb].gsub('/','').gsub('.db','')}.png")
-                   )
-
-chart.file
