@@ -43,3 +43,7 @@
 Run BLAST by using the wrapper and passing in the local db to use and the taxon of the organism to use for queries:
 
     ruby blast_wrapper.rb -b blastdb/cae.db -t 9606
+
+The header row for BLAST results stored in a text file is:
+
+   Query ID    Subject ID	 % identity  alignment length	mismatches	gap opens	q.start	q.end	s.start	s.end evalue bit score
