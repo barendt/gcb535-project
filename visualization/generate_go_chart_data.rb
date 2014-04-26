@@ -25,8 +25,12 @@ end
 
 go_term_counts = Hash.new(0)
 individual_hits = Hash.new
+product_list = Array.new
 
 BlastHit.where(query_taxon: opts[:querytaxon], blastdb: opts[:blastdb]).each do |hit|
+  next if product_list.include?(hit.product_id)
+  product_list << hit.product_id
+
   GoaLine.where(taxon: opts[:querytaxon], db_object_id: hit.product_id).each do |gl|
     go_term_counts[gl.go_id] += 1
     term = GoTerm.where(go_id: gl.go_id).first
