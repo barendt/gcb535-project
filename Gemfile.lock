@@ -20,13 +20,9 @@ GEM
     builder (3.2.2)
     diff-lcs (1.2.5)
     gene_ontology (0.0.1)
-    googlecharts (1.6.8)
-    gruff (0.5.1)
-      rmagick
     i18n (0.6.9)
     json (1.8.1)
     minitest (5.3.0)
-    rmagick (2.13.2)
     rspec (2.14.1)
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)
@@ -48,7 +44,5 @@ DEPENDENCIES
   activerecord
   bio
   gene_ontology
-  googlecharts
-  gruff
   rspec
   trollop
