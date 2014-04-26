@@ -4,6 +4,8 @@ Dir[File.join(File.dirname(__FILE__), 'lib', '**', '*.rb')].each do |file|
  require file
 end
 
+$app_root = File.expand_path(File.dirname(__FILE__))
+
 options = {
   adapter: 'sqlite3',
   database: 'data/gcb535.sqlite3'
