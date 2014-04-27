@@ -22,7 +22,7 @@ end
   Trollop::die key, "must be specified" unless opts[key]
 end
 
-rows = Array.new
+rows = [['Target ID', 'Query DB Object Name', 'Query UniProtKB ID', 'Percent Identity', 'E-value']]
 
 BlastHit.where(query_taxon: opts[:querytaxon], blastdb: opts[:blastdb], matrix: 'BLOSUM62').select(:query_taxon, :blastdb, :query_id, :target_id, :percent_identity, :evalue).distinct.each do |hit|
   gl = GoaLine.where(db_object_id: hit.product_id).first
