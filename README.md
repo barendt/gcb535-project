@@ -55,3 +55,12 @@ Run BLAST by using the wrapper and passing in the local db to use and the taxon 
 The header row for BLAST results stored in a text file is:
 
    Query ID    Subject ID	 % identity  alignment length	mismatches	gap opens	q.start	q.end	s.start	s.end evalue bit score
+
+### Generating mappings between spider transcripts and model organism gene products
+
+Run `generate_gene_to_transcript_map.rb` and specify the query species taxon ID and the local BLAST db to use.
+
+   ruby generate_gene_to_transcript_map.rb -q 7227 -b blastdb/cae.db
+
+This script will create a directory, `results/gene2transcript`, if it doesn't already exist. The results of this script will be stored in a CSV-formatted
+file of the format "#{query_taxon}_#{target_taxon}.csv" (e.g., `7227_cae.csv`).

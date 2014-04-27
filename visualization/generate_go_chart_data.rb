@@ -61,7 +61,7 @@ individual_hits.each do |go_id, objects|
   term_file = File.join(term_results_path, "#{go_id.split(':').last}.csv")
   term = GoTerm.where(go_id: go_id).first.go_term
   File.open(term_file, 'w') do |f|
-    f.write("\"#{go_id}\",\"term\"\n")
+    f.write("\"#{go_id}\",\"#{term.go_term}\"\n")
     objects.each do |object|
       f.write("\"#{object}\"\n")
     end
