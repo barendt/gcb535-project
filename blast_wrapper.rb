@@ -55,6 +55,9 @@ File.open(blast_results_file, 'rb') do |fh|
       bh = BlastHit.new
       bh.matrix = opts[:matrix]
       bh.evalue = hit.evalue
+      bh.bit_score = hit.bit_score
+      bh.identity = hit.identity
+      bh.percent_identity = hit.percent_identity
       bh.overlap = hit.overlap
       bh.query_id = hit.query_id
       bh.query_len = hit.query_len

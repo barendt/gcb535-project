@@ -38,6 +38,9 @@ ActiveRecord::Schema.define do
     create_table :blast_hits do |t|
       t.string :matrix
       t.string :evalue
+      t.string :bit_score
+      t.string :identity
+      t.string :percent_identity
       t.integer :overlap
       t.string :query_id
       t.integer :query_len
