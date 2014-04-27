@@ -6,7 +6,6 @@
 - SQLite
 - Rubygems
 - Local BLAST ()
-- imagemagick
 
 ## Detailed Process
 
