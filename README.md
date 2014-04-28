@@ -65,6 +65,20 @@ BLAST results stored in a text file have the following columns:
 - evalue
 - bit score
 
+### Generating data for visualizing GO term prevalence
+
+After BLASTs have been performed, you can generate CSV-formatted files containing GO term prevalence among BLAST hits by using `visualization/generate_go_chart_data.rb`:
+
+    ruby visualization/generate_go_chart_data.rb -q 7227 -b blastdb/cae.db
+
+This will create a new file, `results/gochartdata-7227_cae.csv`, with the following columns:
+
+- GO ID
+- GO Term
+- Count
+
+where 'Count' is the number of query gene products bearing that annotation that were significant hits against at least 1 transcript in the query database.
+
 ### Generating mappings between spider transcripts and model organism gene products
 
 Run `generate_gene_to_transcript_map.rb` and specify the query species taxon ID and the local BLAST db to use.
